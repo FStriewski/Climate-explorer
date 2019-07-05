@@ -14,8 +14,9 @@ exports.yearTagTSArray = (response) => {
     const yearTaggedValues = flatResponse.map((d, index) => {
         const startYear = 1920;
         const year = String(startYear + index);
-        const values = d.monthVals;
-        return { [year]: values };
+        const monthArray = d.monthVals;
+        const monthTaggedValues = monthArray.map((val, index) => ({ [index + 1]: val }));
+        return { [year]: monthTaggedValues };
     });
     return yearTaggedValues;
 };

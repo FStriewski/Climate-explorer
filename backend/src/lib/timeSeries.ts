@@ -20,11 +20,12 @@ export const generateTSArray = ({ type, indicator, iso }: TSArrayInput): string[
 export const yearTagTSArray = (response) => {
   const responseCollection = response.map(r => r.data)
   const flatResponse = [].concat.apply([], responseCollection);
-  const yearTaggedValues = flatResponse.map((d, index) => {
+  const yearTaggedValues = flatResponse.map((d, index: number) => {
     const startYear = 1920;
     const year = String(startYear + index);
-    const values = d.monthVals
-    return { [year]: values }
+    const monthArray = d.monthVals
+    const monthTaggedValues = monthArray.map((val: number, index: number) => ({ [index+1]: val }))
+    return { [year]: monthTaggedValues }
   })
 
   return yearTaggedValues
