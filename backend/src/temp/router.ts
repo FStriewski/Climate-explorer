@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as express from 'express';
-import {generateTSArray} from '../lib/timeSeries';
+import { generateTSArray, yearTagTSArray} from '../lib/timeSeries';
 
 
 const router = express.Router();
@@ -29,14 +29,7 @@ router.get('/fullTS', (req, res) => {
   Promise.all(promiseCollection)
     .then(response => {
 
-      const responseCollection = response.map(r => r.data )
-      const flatResponse = [].concat.apply([], responseCollection);
-      const yearTaggedValues = flatResponse.map((d, index) => {
-        const startYear = 1920;
-        const year = String(startYear + index);
-        const values = d.monthVals
-        return {[year]: values}
-      })
+      const yearTaggedValues = yearTagTSArray(response)
 
 
       res.send(yearTaggedValues[2])

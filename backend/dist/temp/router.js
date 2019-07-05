@@ -30,14 +30,7 @@ router.get('/fullTS', (req, res) => {
     const promiseCollection = urlCollection.map(url => axios_1.default.get(url));
     Promise.all(promiseCollection)
         .then(response => {
-        const responseCollection = response.map(r => r.data);
-        const flatResponse = [].concat.apply([], responseCollection);
-        const yearTaggedValues = flatResponse.map((d, index) => {
-            const startYear = 1920;
-            const year = String(startYear + index);
-            const values = d.monthVals;
-            return { [year]: values };
-        });
+        const yearTaggedValues = timeSeries_1.yearTagTSArray(response);
         res.send(yearTaggedValues[2]);
     })
         .catch(error => {
