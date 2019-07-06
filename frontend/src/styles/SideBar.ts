@@ -28,3 +28,17 @@ export const SideBarHeader = styled.div`
   z-index: 2;
   text-align: center;
 `;
+
+export const Box = styled.div`
+         height: 38px;
+         display: flex;
+         border-bottom: 1px solid ${SCHEMA_1.COLOR_2};
+         align-items: center;
+         justify-items: center;
+         margin: 0;
+         padding: 12px;
+
+         form {
+           display: flex;
+         }
+       `;

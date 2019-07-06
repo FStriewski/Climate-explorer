@@ -45,7 +45,12 @@ export const Indicator = props => {
   const [ind, setInd] = useState('');
   const setIndicator = (item: IIndicator) => {
     setInd(item.ind);
-    props.setQuery(item.ind);
+
+    const indicator = item.ind;
+    props.setQuery({
+      type: 'indicator',
+      payload: indicator
+    });
   };
 
   return (

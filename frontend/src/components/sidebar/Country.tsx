@@ -93,7 +93,12 @@ export const Country = props => {
   const [iso, setIso] = useState('');
   const setIsoValue = (item: ICountry) => {
     setIso(item.iso);
-    props.setQuery(item.iso);
+
+    const isoCountry = item.iso;
+    props.setQuery({
+      type: 'isoCountry',
+      payload: isoCountry
+    });
   };
 
   return (

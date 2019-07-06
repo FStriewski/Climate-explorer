@@ -1,12 +1,17 @@
 import * as React from 'react';
 const { useState } = React;
 
+import { InputButton, Input } from '../../styles/Button';
+
 export const Year = (props) => {
 const [year, setYear] = useState(0);
 const handleSubmit = event => {
   if (event) {
     event.preventDefault();
-    props.setQuery(year)
+    props.setQuery({
+      type: 'year',
+      payload: year
+    });
   }
 };
 const handleInputChange = event => {
@@ -15,14 +20,14 @@ const handleInputChange = event => {
 };
 
   return (
-  <form onSubmit={handleSubmit}>
-      <input
+    <form onSubmit={handleSubmit}>
+      <Input
         type="text"
         name="year"
         onChange={handleInputChange}
         value={year}
         required={true}
       />
-    <button type="submit">Send</button>
-  </form>
-)};
+      <InputButton type="submit">Select</InputButton>
+    </form>
+  );};

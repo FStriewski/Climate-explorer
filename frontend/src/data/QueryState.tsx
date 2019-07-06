@@ -3,13 +3,14 @@ import { ID, ICV, IPartialNode } from '../types';
 import axios from 'axios';
 
 interface IState {
-  iso: string;
-  ind: string;
+  isoCountry: string;
+  indicator: string;
   year: number;
 }
 
 interface IRenderProps {
   setQueryParam: (param) => void;
+  unlockQuery: () => boolean;
 }
 
 const baseUrl = 'http://localhost:4000';
@@ -22,24 +23,48 @@ export class QueryStateProvider extends React.Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      iso: '',
-      ind: '',
-      year: 0
+      isoCountry: null,
+      indicator: null,
+      year: null
     };
   }
 
+  unlockQuery = () => {
+    const { isoCountry, indicator, year } = this.state;
+    
+    return (isoCountry && indicator && year) ? false : true;
+  };
+
   // needs definition
-  setQueryParam = (param ) =>
-    this.setState({
-      ...this.state
-    });
+  setQueryParam = param => {
+    switch (param.type) {
+      case 'indicator':
+        return this.setState({
+          ...this.state,
+          indicator: param.payload
+        });
+      case 'isoCountry':
+        return this.setState({
+          ...this.state,
+          isoCountry: param.payload
+        });
+      case 'year':
+        return this.setState({
+          ...this.state,
+          year: param.payload
+        });
+      default:
+        return this.state;
+    }
+  };
 
   render() {
     console.log(this.state);
     return (
       <Provider
         value={{
-          setQueryParam: this.setQueryParam
+          setQueryParam: this.setQueryParam,
+          unlockQuery: this.unlockQuery
         }}
       >
         {this.props.children}
