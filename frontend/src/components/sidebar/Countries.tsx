@@ -8,9 +8,6 @@ import {
   DropdownListItem
 } from '../../styles/Dropdown';
 
-import { CountryState, CountryStateProvider } from './CountryContext';
-
-
 export type Value = {
   iso: string;
 };
@@ -20,8 +17,8 @@ export interface ICountry extends Value {
 }
 
 const DEFAULT: ICountry = {
-  label: 'Netherlands',
-  iso: 'NLD'
+  label: 'select Country',
+  iso: ''
 };
 
 const COUNTRY_VALUES: ICountry[] = [
@@ -88,32 +85,25 @@ const COUNTRY_VALUES: ICountry[] = [
 ];
 
 const getIso = (iso: string) => {
-  const zoomvalue = COUNTRY_VALUES.find(item => item.iso === iso) || DEFAULT;
-  return zoomvalue.label;
+  const target = COUNTRY_VALUES.find(item => item.iso === iso) || DEFAULT;
+  return target.label;
 };
 
-export const Countries = () => (
-  <CountryStateProvider>
-         <CountryState>
-           {({ iso, updateIso }) => (
-             <Dropdown
-               autoClose={true}
-               handler={onToggle => (
-                 <Button onClick={onToggle}>{getIso(iso)}</Button>
-               )}
-             >
-               <StyledDropdownList>
-                 {COUNTRY_VALUES.map((item, index) => (
-                   <DropdownListItem
-                     key={index}
-                     onClick={() => updateIso(item.iso)}
-                   >
-                     {item.label}
-                   </DropdownListItem>
-                 ))}
-               </StyledDropdownList>
-             </Dropdown>
-           )}
-         </CountryState>
-         </CountryStateProvider>
-       );
+export const Countries = () => {
+  const [iso, setIso] = useState('');
+
+  return (
+    <Dropdown
+      autoClose={true}
+      handler={onToggle => <Button onClick={onToggle}>{getIso(iso)}</Button>}
+    >
+      <StyledDropdownList>
+        {COUNTRY_VALUES.map((item, index) => (
+          <DropdownListItem key={index} onClick={() => setIso(item.iso)}>
+            {item.label}
+          </DropdownListItem>
+        ))}
+      </StyledDropdownList>
+    </Dropdown>
+  );
+};
