@@ -7,6 +7,8 @@ import { MainStage as StyledMainStage } from '../../styles/MainStage';
 import { Col1 } from './Columns';
 import { Node } from './Element';
 import { SingleLineChart } from 'src/test/LineChart';
+import GridLayout from 'react-grid-layout';
+import '../../styles/React-Grid.css';
 
 interface IRenderProps {
   nodes: IPartialNode[];
@@ -27,24 +29,24 @@ const test = {
   '12': 2.79226248
 };
 
+const layout = [
+  { i: 'a', x: 0, y: 0, w: 1, h: 2, static: true },
+  { i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
+  { i: 'c', x: 4, y: 0, w: 1, h: 2 }
+];
+
 const MainStage = () => (
   <Survey>
     {({ nodes }: IRenderProps) => (
-      <DraggableHOC>
-        <SelectionStateProvider>
-          <StyledMainStage>
+      // <SelectionStateProvider>
+      <StyledMainStage>
+        <GridLayout className="layout" cols={12} rowHeight={30} width={1200}>
+          <div key="b" data-grid={{ x: 1, y: 0, w: 4, h: 4 }}>
             <SingleLineChart data={test} />
-            {/* <Col1>
-              {nodes ? (
-                nodes.map(node => <Node key={node.id} node={node} />)
-              ) : (
-                <div />
-              )}
-              }
-            </Col1> */}
-          </StyledMainStage>
-        </SelectionStateProvider>
-      </DraggableHOC>
+          </div>
+        </GridLayout>
+      </StyledMainStage>
+      // </SelectionStateProvider>
     )}
   </Survey>
 );

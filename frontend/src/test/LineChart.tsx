@@ -5,5 +5,8 @@ import 'chart.js';
 
 export const SingleLineChart = ({ data }) => {
   console.log(data);
-  return <LineChart data={data} width="800px" height="400px" />;
+  return (
+  <React.Fragment>
+    <LineChart data={data} width="100%" height="100%" /><div>Chart label</div>
+  </React.Fragment>);
 };
