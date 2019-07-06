@@ -4,6 +4,7 @@ import { SideBarHeader } from './Header';
 import { Country } from './Country';
 import { Indicator } from './Indicator';
 import QueryState from '../../data/QueryState';
+import {Year} from './Year';
 
 /* tslint:disable: jsx-no-lambda */
 const SideBar = () => (
@@ -14,6 +15,7 @@ const SideBar = () => (
         <span>Select Country (Dropdown)</span>
         <Country setQuery={setQueryParam}/>
         <span>Select Year (Input)</span>
+        <Year setQuery={setQueryParam}/>
         <span>Select T/P/TP(Dropdown)</span>
         <Indicator setQuery={setQueryParam}/>
       </StyledSideBar>
