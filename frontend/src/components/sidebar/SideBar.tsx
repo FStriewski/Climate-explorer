@@ -3,7 +3,7 @@ import { SideBar as StyledSideBar } from '../../styles/SideBar';
 import { SideBarHeader } from './Header';
 import { Country } from './Country';
 import { Indicator } from './Indicator';
-import QueryState from '../../data/SurveyState';
+import QueryState from '../../data/QueryState';
 
 /* tslint:disable: jsx-no-lambda */
 const SideBar = () => (

@@ -92,8 +92,8 @@ const getIso = (iso: string) => {
 export const Country = props => {
   const [iso, setIso] = useState('');
   const setIsoValue = (item: ICountry) => {
-    setIso(item.ind);
-    props.setQuery(item.ind);
+    setIso(item.iso);
+    props.setQuery(item.iso);
   };
 
   return (

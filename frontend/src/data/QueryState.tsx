@@ -28,7 +28,7 @@ export class QueryStateProvider extends React.Component<{}, IState> {
     };
   }
 
-  setQueryParam = ({ param }) =>
+  setQueryParam = (param ) =>
     this.setState({
       ...this.state,
       param
