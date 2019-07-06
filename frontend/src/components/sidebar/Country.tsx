@@ -21,7 +21,7 @@ const DEFAULT: ICountry = {
   iso: ''
 };
 
-const COUNTRY_VALUES: ICountry[] = [
+const COUNTRIES: ICountry[] = [
   {
     label: 'Antarctica',
     iso: 'ATA'
@@ -85,12 +85,16 @@ const COUNTRY_VALUES: ICountry[] = [
 ];
 
 const getIso = (iso: string) => {
-  const target = COUNTRY_VALUES.find(item => item.iso === iso) || DEFAULT;
+  const target = COUNTRIES.find(item => item.iso === iso) || DEFAULT;
   return target.label;
 };
 
-export const Countries = () => {
+export const Country = props => {
   const [iso, setIso] = useState('');
+  const setIsoValue = (item: ICountry) => {
+    setIso(item.ind);
+    props.setQuery(item.ind);
+  };
 
   return (
     <Dropdown
@@ -98,8 +102,8 @@ export const Countries = () => {
       handler={onToggle => <Button onClick={onToggle}>{getIso(iso)}</Button>}
     >
       <StyledDropdownList>
-        {COUNTRY_VALUES.map((item, index) => (
-          <DropdownListItem key={index} onClick={() => setIso(item.iso)}>
+        {COUNTRIES.map((item, index) => (
+          <DropdownListItem key={index} onClick={() => setIsoValue(item)}>
             {item.label}
           </DropdownListItem>
         ))}
