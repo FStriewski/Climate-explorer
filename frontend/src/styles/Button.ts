@@ -23,7 +23,6 @@ export const Button = styled.button`
   text-align: center;
   white-space: nowrap;
   background-color: ${SCHEMA_1.COLOR_3};
-  width: 70px;
   color: ${COMMON.COLOR_1};
   margin: 10px;
 

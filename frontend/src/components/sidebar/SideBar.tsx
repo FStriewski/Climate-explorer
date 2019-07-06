@@ -4,15 +4,18 @@ import { Button } from '../../styles/Button';
 import { SideBarHeader } from './Header';
 import ModeSetting, { ModeState } from 'src/data/Mode';
 import { Mode } from '../../types';
+import { Countries } from './Countries';
 
-  /* tslint:disable: jsx-no-lambda */
+/* tslint:disable: jsx-no-lambda */
 const SideBar = () => (
   <ModeSetting>
     {({ mode, updateMode }) => (
       <StyledSideBar>
         <SideBarHeader />
-        <Button onClick={() => updateMode(Mode.EDIT)}>Edit</Button>
-        <Button onClick={() => updateMode(Mode.DRAG)}>Drag</Button>
+        <span>Select Country (Dropdown)</span>
+        <Countries/>
+        <span>Select Year (Input)</span>
+        <span>Select T/P/TP(Dropdown)</span>
       </StyledSideBar>
     )}
   </ModeSetting>
