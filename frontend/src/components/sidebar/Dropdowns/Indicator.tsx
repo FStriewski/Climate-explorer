@@ -1,40 +1,19 @@
 import * as React from 'react';
 const { useState } = React;
 
-import Dropdown from '../../lib/DropDown';
-import { Button } from '../../styles/Button';
+import Dropdown from '../../../lib/DropDown';
+import { Button } from '../../../styles/Button';
 import {
   DropdownList as StyledDropdownList,
   DropdownListItem
-} from '../../styles/Dropdown';
+} from '../../../styles/Dropdown';
 
-export type Value = {
-  ind: string;
-};
-
-export interface IIndicator extends Value {
-  label: string;
-}
+import { IIndicator, INDICATORS } from '../../../data/Parameters';
 
 const DEFAULT: IIndicator = {
   label: 'select Indicator',
   ind: ''
 };
-
-const INDICATORS: IIndicator[] = [
-  {
-    label: 'Temperature',
-    ind: 'tas'
-  },
-  {
-    label: 'Precepitation',
-    ind: 'pr'
-  },
-  {
-    label: 'Combined',
-    ind: 'taspr'
-  }
-];
 
 const getInd = (ind: string) => {
   const target = INDICATORS.find(item => item.ind === ind) || DEFAULT;

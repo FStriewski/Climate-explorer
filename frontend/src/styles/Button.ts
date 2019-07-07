@@ -47,7 +47,7 @@ export const QueryButton = styled<{ disabled?: boolean }, 'button'>('button')`
   box-shadow: none;
   text-align: center;
   white-space: nowrap;
-  background-color: ${props => (props.disabled ? '#ff0000' : SCHEMA_1.COLOR_3)};
+  background-color: ${props => (props.disabled ? '#a0a0a0' : SCHEMA_1.COLOR_3)};
   
   color: ${COMMON.COLOR_1};
   margin: 10px;

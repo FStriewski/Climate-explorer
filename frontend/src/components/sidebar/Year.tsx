@@ -1,7 +1,7 @@
 import * as React from 'react';
 const { useState } = React;
 
-import { InputButton, Input } from '../../styles/Button';
+import {InputButton, Input} from '../../styles/Button';
 
 export const Year = (props) => {
 const [year, setYear] = useState(0);

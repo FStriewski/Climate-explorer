@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { SideBar as StyledSideBar, Box } from '../../styles/SideBar';
 import { SideBarHeader } from './Header';
-import { Country } from './Country';
-import { Indicator } from './Indicator';
+import { Country } from './Dropdowns/Country';
+import { Indicator } from './Dropdowns/Indicator';
 import QueryState from '../../data/QueryState';
 import { Year } from './Year';
 import { QueryButton } from '../../styles/Button';
@@ -10,7 +10,7 @@ import { QueryButton } from '../../styles/Button';
 /* tslint:disable: jsx-no-lambda */
 const SideBar = () => (
   <QueryState>
-    {({ setQueryParam, unlockQuery }) => (
+    {({ setQueryParam, lockedQuery }) => (
       <StyledSideBar>
         <SideBarHeader />
         <Box>
@@ -23,7 +23,7 @@ const SideBar = () => (
           <Indicator setQuery={setQueryParam} />
         </Box>
         <Box>
-          <QueryButton onClick={setQueryParam} disabled={unlockQuery()}>
+          <QueryButton onClick={setQueryParam} disabled={lockedQuery()}>
             Query
           </QueryButton>
         </Box>

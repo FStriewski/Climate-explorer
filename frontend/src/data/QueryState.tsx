@@ -10,7 +10,7 @@ interface IState {
 
 interface IRenderProps {
   setQueryParam: (param) => void;
-  unlockQuery: () => boolean;
+  lockedQuery: () => boolean;
 }
 
 const baseUrl = 'http://localhost:4000';
@@ -29,7 +29,11 @@ export class QueryStateProvider extends React.Component<{}, IState> {
     };
   }
 
-  unlockQuery = () => {
+  getYear = () => {
+    if (this.lockedQuery){return;}
+  }
+
+  lockedQuery = () => {
     const { isoCountry, indicator, year } = this.state;
     
     return (isoCountry && indicator && year) ? false : true;
@@ -64,7 +68,7 @@ export class QueryStateProvider extends React.Component<{}, IState> {
       <Provider
         value={{
           setQueryParam: this.setQueryParam,
-          unlockQuery: this.unlockQuery
+          lockedQuery: this.lockedQuery
         }}
       >
         {this.props.children}
