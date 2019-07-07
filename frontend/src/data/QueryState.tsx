@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ID, ICV, IPartialNode } from '../types';
 import axios from 'axios';
 
 interface IState {
@@ -8,9 +7,29 @@ interface IState {
   year: number;
 }
 
+type RequestParams = {
+  indicator: string;
+  country: string;
+};
+
+type RequestParamsYear = {
+  year: string;
+} & RequestParams;
+
+type RequestParamsMonth = {
+  month: string;
+} & RequestParams;
+
 interface IRenderProps {
   setQueryParam: (param) => void;
   lockedQuery: () => boolean;
+  getYear: ({ indicator, country, year }: RequestParamsYear) => void;
+  getMonthTimeSeries: ({
+    indicator,
+    country,
+    month
+  }: RequestParamsMonth) => void;
+  getTimeSeries: ({ indicator, country }: RequestParams) => void;
 }
 
 const baseUrl = 'http://localhost:4000';
@@ -29,14 +48,33 @@ export class QueryStateProvider extends React.Component<{}, IState> {
     };
   }
 
-  getYear = () => {
-    if (this.lockedQuery){return;}
-  }
+  getYear = ({ indicator, country, year }: RequestParamsYear) => {
+    if (this.lockedQuery) {
+      return;
+    }
+    axios.get(`${baseUrl}/temp/${indicator}/${country}/${year}/`);
+  };
+
+  getMonthTimeSeries = ({ indicator, country, month }) => {
+    if (this.lockedQuery) {
+      return;
+    }
+    axios.get(
+      `${baseUrl}/getMonthTimeSeries/${indicator}/${country}/${month}/`
+    );
+  };
+
+  getTimeSeries = ({ indicator, country }: RequestParams) => {
+    if (this.lockedQuery) {
+      return;
+    }
+    axios.get(`${baseUrl}/timeSeries/${indicator}/${country}/`);
+  };
 
   lockedQuery = () => {
     const { isoCountry, indicator, year } = this.state;
-    
-    return (isoCountry && indicator && year) ? false : true;
+
+    return isoCountry && indicator && year ? false : true;
   };
 
   // needs definition
@@ -68,7 +106,10 @@ export class QueryStateProvider extends React.Component<{}, IState> {
       <Provider
         value={{
           setQueryParam: this.setQueryParam,
-          lockedQuery: this.lockedQuery
+          lockedQuery: this.lockedQuery,
+          getYear: this.getYear,
+          getMonthTimeSeries: this.getMonthTimeSeries,
+          getTimeSeries: this.getTimeSeries
         }}
       >
         {this.props.children}
