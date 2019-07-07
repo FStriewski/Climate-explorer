@@ -26,23 +26,53 @@ const router = express.Router();
 //     });
 // });
 // Specific year (12 months) for country
-router.get('/temp/:iso/:target', (req, res) => {
-    const { iso, target } = req.params;
-    const year = parseInt(target, 10);
+router.get('/temp/:iso/:targetYear', (req, res) => {
+    const { iso, targetYear } = req.params;
+    const year = parseInt(targetYear, 10);
     const yearRange = transformations_1.determineTargetRange(year, iso);
-    axios_1.default.get(yearRange).then(response => {
-        const monthsByYear = response.data
-            .map((record, index) => ([record.fromYear + index, record.monthVals]));
+    axios_1.default
+        .get(yearRange)
+        .then(response => {
+        const monthsByYear = response.data.map((record, index) => [
+            record.fromYear + index,
+            record.monthVals
+        ]);
         const result = monthsByYear.find((record) => record[0] === year);
-        const monthTaggedValues = result[1].map((val, index) => ({ [index + 1]: val }));
-        res.send({ [year]: monthTaggedValues });
-    }).catch(error => {
+        const monthTaggedValues = result[1].map((val, index) => [
+            [index + 1],
+            val
+        ]);
+        res.send([[year], monthTaggedValues]);
+    })
+        .catch(error => {
+        console.log(error);
+    });
+});
+// Full time series of a specific month for country
+router.get('/tempTS/:iso/:month', (req, res) => {
+    const urlCollection = transformations_1.generateTSArray({
+        type: 'mavg',
+        indicator: 'tas',
+        iso: req.params.iso
+    });
+    const promiseCollection = urlCollection.map(url => axios_1.default.get(url));
+    Promise.all(promiseCollection)
+        .then(response => {
+        const fullTimeSeries = transformations_1.yearTagTSArray(response);
+        const monthlyValues = transformations_1.filterToMonthTS(fullTimeSeries, req.params.month);
+        res.send(monthlyValues);
+    })
+        .catch(error => {
         console.log(error);
     });
 });
 // Full time series (monts) for country
 router.get('/tempTS/:iso', (req, res) => {
-    const urlCollection = transformations_1.generateTSArray({ type: 'mavg', indicator: 'tas', iso: req.params.iso });
+    const urlCollection = transformations_1.generateTSArray({
+        type: 'mavg',
+        indicator: 'tas',
+        iso: req.params.iso
+    });
     const promiseCollection = urlCollection.map(url => axios_1.default.get(url));
     Promise.all(promiseCollection)
         .then(response => {
