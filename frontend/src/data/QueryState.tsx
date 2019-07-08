@@ -8,6 +8,7 @@ interface IRenderProps {
   setTool: (tool: string) => void;
   charts: Chart[];
   addRecord: (data: any) => void;
+  flushState: () => void;
   state: IState;
 }
 
@@ -57,14 +58,23 @@ export class QueryStateProvider extends React.Component<{}, IState> {
 
   setTool = mode => this.setState({ tool: mode });
 
+  flushState = () => {
+    this.setState({
+      tool: null,
+      isoCountry: null,
+      indicator: null,
+      year: null,
+      month: null
+    });
+  }
+
   addRecord = (chart: Chart) =>
     this.setState({
       ...this.state,
       charts: this.state.charts.concat(chart)
-    });
+    }, () => this.flushState());
 
   setQueryParam = param => {
-    console.log(param);
     switch (param.type) {
       case 'indicator':
         return this.setState({
@@ -92,7 +102,7 @@ export class QueryStateProvider extends React.Component<{}, IState> {
   };
 
   render() {
-    console.log(this.state);
+    console.log(this.state.charts);
     return (
       <Provider
         value={{
@@ -102,7 +112,8 @@ export class QueryStateProvider extends React.Component<{}, IState> {
           tool: this.state.tool,
           setTool: this.setTool,
           charts: this.state.charts,
-          addRecord: this.addRecord
+          addRecord: this.addRecord,
+          flushState: this.flushState,
         }}
       >
         {this.props.children}

@@ -25,7 +25,6 @@ export const Country = ({ setQuery }) => {
   const setIsoValue = (item: ICountry) => {
     setIso(item.iso);
 
-    console.log(setQuery);
     const isoCountry = item.iso;
     setQuery({
       type: 'isoCountry',

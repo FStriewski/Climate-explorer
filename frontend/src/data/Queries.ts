@@ -4,7 +4,7 @@ const baseUrl = 'http://localhost:4000';
 
 type RequestParams = {
   indicator: string;
-  country: string;
+  isoCountry: string;
 };
 
 type RequestParamsYear = {
@@ -16,27 +16,30 @@ type RequestParamsMonth = {
 } & RequestParams;
 
 export const getYear = (props: RequestParamsYear) => {
-  const { indicator, country, year } = props;
+  const { indicator, isoCountry, year } = props;
 
-  if (!indicator || !country || !year) {
+  if (!indicator || !isoCountry || !year) {
     return;
   }
-  axios.get(`${baseUrl}/temp/${indicator}/${country}/${year}/`);
+  return axios.get(`${baseUrl}/temp/${indicator}/${isoCountry}/${year}/`);
 };
 
 export const getMonthTimeSeries = (props: RequestParamsMonth) => {
-  const { indicator, country, month } = props;
-  if (!indicator || !country || !month) {
+  const { indicator, isoCountry, month } = props;
+  if (!indicator || !isoCountry || !month) {
     return;
   }
-  axios.get(`${baseUrl}/getMonthTimeSeries/${indicator}/${country}/${month}/`);
+  return axios.get(`${baseUrl}/getMonthTimeSeries/${indicator}/${isoCountry}/${month}/`);
 };
 
-export const getTimeSeries = (props: RequestParams) => {
-  const { indicator, country } = props;
-  if (!indicator || !country) {
+export const getTimeSeries = async (props: RequestParams) => {
+  const { indicator, isoCountry } = props;
+  if (!indicator || !isoCountry) {
     return;
   }
-
-  axios.get(`${baseUrl}/timeSeries/${indicator}/${country}/`);
+  
+  const response =  await axios.get(`${baseUrl}/timeSeries/${indicator}/${isoCountry}/`);
+  
+  console.log(response.data)
+  return response.data
 };

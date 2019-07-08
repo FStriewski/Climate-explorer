@@ -27,7 +27,8 @@ const renderToolgroup = (tool, setQueryParam) => {
   }
 };
 
-const makeCall = async (state, addRecord) => {
+const makeCall =  async (state, addRecord, flushState) => {
+  console.log(state.tool)
   switch (state.tool) {
     case 'Year':
       const yearData = await getYear(state);
@@ -36,6 +37,7 @@ const makeCall = async (state, addRecord) => {
         data: yearData,
         description: 'Single Year'
       });
+      flushState();
       return;
     case 'MonthTS':
       const monthData = await getMonthTimeSeries(state);
@@ -44,14 +46,18 @@ const makeCall = async (state, addRecord) => {
         data: monthData,
         description: 'Month TS'
       });
+      flushState();
+
       return;
     case 'FullTS':
       const tsData = await getTimeSeries(state);
+      console.log(tsData);
       addRecord({
         id: generateId(),
         data: tsData,
         description: 'Full TS'
       });
+      flushState();
 
       return;
   }
@@ -59,7 +65,14 @@ const makeCall = async (state, addRecord) => {
 
 const SideBar = () => (
   <QueryState>
-    {({ setQueryParam, lockedQuery, setTool, addRecord, state }) => (
+    {({
+      setQueryParam,
+      lockedQuery,
+      setTool,
+      addRecord,
+      state,
+      flushState
+    }) => (
       <StyledSideBar>
         <Box>
           <Mode setTool={setTool} />
@@ -67,7 +80,7 @@ const SideBar = () => (
         {renderToolgroup(state.tool, setQueryParam)}
         <Box>
           <QueryButton
-            onClick={() => makeCall(state, addRecord)}
+            onClick={() => makeCall(state, addRecord, flushState)}
             disabled={lockedQuery()}
           >
             Query

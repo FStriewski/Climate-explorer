@@ -136,10 +136,6 @@ export const INDICATORS: IIndicator[] = [
     label: 'Precepitation',
     ind: 'pr'
   },
-  {
-    label: 'Combined',
-    ind: 'taspr'
-  }
 ];
 export interface IMode {
   label: string;
