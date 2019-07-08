@@ -29,15 +29,28 @@ const makeCall = async (state, addRecord) => {
   switch (state.tool) {
     case 'Year':
       const yearData = await getYear(state);
-      addRecord(yearData);
+      addRecord({
+        id: 'xx',
+        data: yearData,
+        description: 'Single Year'
+      });
       return;
     case 'MonthTS':
       const monthData = await getMonthTimeSeries(state);
-      addRecord(monthData);
+      addRecord({
+        id: 'xx',
+        data: monthData,
+        description: 'Month TS'
+      });
       return;
     case 'FullTS':
       const tsData = await getTimeSeries(state);
-      addRecord(tsData);
+      addRecord({
+        id: 'xx',
+        data: tsData,
+        description: 'Full TS'
+      });
+
       return;
   }
 };

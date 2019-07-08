@@ -50,9 +50,9 @@ export class QueryStateProvider extends React.Component<{}, IState> {
   }
 
   lockedQuery = () => {
-    const { isoCountry, indicator, year } = this.state;
+    const { isoCountry, indicator } = this.state;
 
-    return isoCountry && indicator && year ? false : true;
+    return isoCountry && indicator ? false : true;
   };
 
   setTool = mode => this.setState({ tool: mode });
