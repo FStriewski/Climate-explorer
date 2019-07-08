@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ID } from '../types';
+import { ID } from './types';
 
 interface IState {
   selectedId: ID | null;

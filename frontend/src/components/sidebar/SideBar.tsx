@@ -4,6 +4,7 @@ import { SideBar as StyledSideBar, Box } from '../../styles/SideBar';
 import QueryState from '../../data/QueryState';
 import { QueryButton } from '../../styles/Button';
 import { Mode } from './Dropdowns/Mode';
+import { getYear, getMonthTimeSeries, getTimeSeries } from '../../data/Queries';
 
 import {
   toolgroupYear,
@@ -24,16 +25,36 @@ const renderToolgroup = (tool, setQueryParam) => {
   }
 };
 
+const makeCall = async (state, addRecord) => {
+  switch (state.tool) {
+    case 'Year':
+      const yearData = await getYear(state);
+      addRecord(yearData);
+      return;
+    case 'MonthTS':
+      const monthData = await getMonthTimeSeries(state);
+      addRecord(monthData);
+      return;
+    case 'FullTS':
+      const tsData = await getTimeSeries(state);
+      addRecord(tsData);
+      return;
+  }
+};
+
 const SideBar = () => (
   <QueryState>
-    {({ setQueryParam, lockedQuery, tool, setTool }) => (
+    {({ setQueryParam, lockedQuery, setTool, addRecord, state }) => (
       <StyledSideBar>
         <Box>
           <Mode setTool={setTool} />
         </Box>
-        {renderToolgroup(tool, setQueryParam)}
+        {renderToolgroup(state.tool, setQueryParam)}
         <Box>
-          <QueryButton onClick={setQueryParam} disabled={lockedQuery()}>
+          <QueryButton
+            onClick={() => makeCall(state, addRecord)}
+            disabled={lockedQuery()}
+          >
             Query
           </QueryButton>
         </Box>

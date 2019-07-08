@@ -1,43 +1,36 @@
 import * as React from 'react';
-import axios from 'axios';
-
-interface IState {
-  isoCountry: string;
-  indicator: string;
-  year: number;
-  tool: 'Year' | 'MonthTS' | 'FullTS';
-  month: string;
-}
-
-type RequestParams = {
-  indicator: string;
-  country: string;
-};
-
-type RequestParamsYear = {
-  year: string;
-} & RequestParams;
-
-type RequestParamsMonth = {
-  month: string;
-} & RequestParams;
+import { Chart, IState } from '../lib/types';
 
 interface IRenderProps {
   setQueryParam: (param) => void;
   lockedQuery: () => boolean;
-  lockedBuilder: () => boolean;
-  getYear: ({ indicator, country, year }: RequestParamsYear) => void;
-  getMonthTimeSeries: ({
-    indicator,
-    country,
-    month
-  }: RequestParamsMonth) => void;
-  getTimeSeries: ({ indicator, country }: RequestParams) => void;
   tool: 'Year' | 'MonthTS' | 'FullTS';
   setTool: (tool: string) => void;
+  charts: Chart[];
+  addRecord: (data: any) => void;
+  state: IState;
 }
 
-const baseUrl = 'http://localhost:4000';
+const data = {
+  '1': 1.781228202,
+  '2': 1.128090995,
+  '3': 2.222555978,
+  '4': 5.432564872,
+  '5': 9.921055385,
+  '6': 13.3447004,
+  '7': 14.68692017,
+  '8': 14.01670619,
+  '9': 12.27503749,
+  '10': 8.981488909,
+  '11': 5.703687395,
+  '12': 2.79226248
+};
+
+const fakeChart = {
+  id: '123',
+  data,
+  description: 'Fakechart'
+}
 
 /* tslint:disable-next-line:no-object-literal-type-assertion */
 const { Consumer, Provider } = React.createContext({} as IRenderProps);
@@ -51,32 +44,10 @@ export class QueryStateProvider extends React.Component<{}, IState> {
       indicator: null,
       year: null,
       month: null,
-      tool: null
+      tool: null,
+      charts: [fakeChart]
     };
   }
-
-  getYear = ({ indicator, country, year }: RequestParamsYear) => {
-    if (this.lockedQuery) {
-      return;
-    }
-    axios.get(`${baseUrl}/temp/${indicator}/${country}/${year}/`);
-  };
-
-  getMonthTimeSeries = ({ indicator, country, month }) => {
-    if (this.lockedQuery) {
-      return;
-    }
-    axios.get(
-      `${baseUrl}/getMonthTimeSeries/${indicator}/${country}/${month}/`
-    );
-  };
-
-  getTimeSeries = ({ indicator, country }: RequestParams) => {
-    if (this.lockedQuery) {
-      return;
-    }
-    axios.get(`${baseUrl}/timeSeries/${indicator}/${country}/`);
-  };
 
   lockedQuery = () => {
     const { isoCountry, indicator, year } = this.state;
@@ -84,15 +55,16 @@ export class QueryStateProvider extends React.Component<{}, IState> {
     return isoCountry && indicator && year ? false : true;
   };
 
-  lockedBuilder = () => {
-    return (this.state.tool && true)
-  };
+  setTool = mode => this.setState({ tool: mode });
 
-  setTool = (mode) => this.setState({tool: mode})
+  addRecord = (chart: Chart) =>
+    this.setState({
+      ...this.state,
+      charts: this.state.charts.concat(chart)
+    });
 
-  // needs definition
   setQueryParam = param => {
-    console.log(param)
+    console.log(param);
     switch (param.type) {
       case 'indicator':
         return this.setState({
@@ -124,14 +96,13 @@ export class QueryStateProvider extends React.Component<{}, IState> {
     return (
       <Provider
         value={{
+          state: this.state,
           setQueryParam: this.setQueryParam,
           lockedQuery: this.lockedQuery,
-          lockedBuilder: this.lockedBuilder,
-          getYear: this.getYear,
-          getMonthTimeSeries: this.getMonthTimeSeries,
-          getTimeSeries: this.getTimeSeries,
           tool: this.state.tool,
           setTool: this.setTool,
+          charts: this.state.charts,
+          addRecord: this.addRecord
         }}
       >
         {this.props.children}
