@@ -35,7 +35,7 @@ export const Dropdown = ({ children, handler, autoClose }: IProps) => (
               : handler(toggleMenu, false)}
             {menuVisible &&
               (autoClose ? (
-                <DropdownContent onClick={toggleMenu}>
+                <DropdownContent onClick={() => toggleMenu(false)}>
                   {children}
                 </DropdownContent>
               ) : (
