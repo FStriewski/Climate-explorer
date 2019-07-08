@@ -17,6 +17,7 @@ type RequestParamsMonth = {
 
 export const getYear = async (props: RequestParamsYear) => {
   const { indicator, isoCountry, year } = props;
+console.log(indicator, isoCountry, year )
 
   if (!indicator || !isoCountry || !year) {
     return;
@@ -24,7 +25,7 @@ export const getYear = async (props: RequestParamsYear) => {
   const response = await axios.get(
     `${baseUrl}/temp/${indicator}/${isoCountry}/${year}/`
   );
-
+console.log(response)
   return response.data;
 };
 
@@ -34,7 +35,7 @@ export const getMonthTimeSeries = async (props: RequestParamsMonth) => {
     return;
   }
   const response = await axios.get(
-    `${baseUrl}/getMonthTimeSeries/${indicator}/${isoCountry}/${month}/`
+    `${baseUrl}/monthTimeSeries/${indicator}/${isoCountry}/${month}/`
   );
 
   return response.data;

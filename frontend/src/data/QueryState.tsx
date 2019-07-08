@@ -102,7 +102,6 @@ export class QueryStateProvider extends React.Component<{}, IState> {
   };
 
   render() {
-    console.log(this.state.charts);
     return (
       <Provider
         value={{
