@@ -12,6 +12,8 @@ import {
   toolgroupFullTS
 } from '../sidebar/Toolgroups';
 
+const generateId = () => Math.floor(Math.random() * Math.random() * 100000);
+
 const renderToolgroup = (tool, setQueryParam) => {
   switch (tool) {
     case 'Year':
@@ -30,7 +32,7 @@ const makeCall = async (state, addRecord) => {
     case 'Year':
       const yearData = await getYear(state);
       addRecord({
-        id: 'xx',
+        id: generateId(),
         data: yearData,
         description: 'Single Year'
       });
@@ -38,7 +40,7 @@ const makeCall = async (state, addRecord) => {
     case 'MonthTS':
       const monthData = await getMonthTimeSeries(state);
       addRecord({
-        id: 'xx',
+        id: generateId(),
         data: monthData,
         description: 'Month TS'
       });
@@ -46,7 +48,7 @@ const makeCall = async (state, addRecord) => {
     case 'FullTS':
       const tsData = await getTimeSeries(state);
       addRecord({
-        id: 'xx',
+        id: generateId(),
         data: tsData,
         description: 'Full TS'
       });
