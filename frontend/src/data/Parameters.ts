@@ -141,3 +141,22 @@ export const INDICATORS: IIndicator[] = [
     ind: 'taspr'
   }
 ];
+export interface IMode {
+  label: string;
+  mode: string;
+}
+
+export const MODE: IMode[] = [
+  {
+    label: 'Year',
+    mode: 'Year'
+  },
+  {
+    label: 'MonthTS',
+    mode: 'MonthTS'
+  },
+  {
+    label: 'FullTS',
+    mode: 'FullTS'
+  }
+];

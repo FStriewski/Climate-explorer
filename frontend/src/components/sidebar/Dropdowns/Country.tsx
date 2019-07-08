@@ -8,7 +8,7 @@ import {
   DropdownListItem
 } from '../../../styles/Dropdown';
 
-import {ICountry, COUNTRIES} from '../../../data/Parameters';
+import { ICountry, COUNTRIES } from '../../../data/Parameters';
 
 const DEFAULT: ICountry = {
   label: 'select Country',
@@ -20,13 +20,14 @@ const getIso = (iso: string) => {
   return target.label;
 };
 
-export const Country = props => {
+export const Country = ({ setQuery }) => {
   const [iso, setIso] = useState('');
   const setIsoValue = (item: ICountry) => {
     setIso(item.iso);
 
+    console.log(setQuery);
     const isoCountry = item.iso;
-    props.setQuery({
+    setQuery({
       type: 'isoCountry',
       payload: isoCountry
     });

@@ -20,13 +20,13 @@ const getInd = (ind: string) => {
   return target.label;
 };
 
-export const Indicator = props => {
+export const Indicator = ({ setQuery }) => {
   const [ind, setInd] = useState('');
   const setIndicator = (item: IIndicator) => {
     setInd(item.ind);
 
     const indicator = item.ind;
-    props.setQuery({
+    setQuery({
       type: 'indicator',
       payload: indicator
     });

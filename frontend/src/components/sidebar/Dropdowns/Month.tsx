@@ -20,13 +20,13 @@ const getMonth = (month: number) => {
   return target.label;
 };
 
-export const Month = props => {
+export const Month = ({setQuery}) => {
   const [mon, setMonth] = useState(0);
   const updateMonth = (item: IMonth) => {
     setMonth(item.mon);
 
     const month = item.mon;
-    props.setQuery({
+    setQuery({
       type: 'month',
       payload: month
     });

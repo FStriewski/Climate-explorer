@@ -5,6 +5,8 @@ interface IState {
   isoCountry: string;
   indicator: string;
   year: number;
+  tool: 'Year' | 'MonthTS' | 'FullTS';
+  month: string;
 }
 
 type RequestParams = {
@@ -23,6 +25,7 @@ type RequestParamsMonth = {
 interface IRenderProps {
   setQueryParam: (param) => void;
   lockedQuery: () => boolean;
+  lockedBuilder: () => boolean;
   getYear: ({ indicator, country, year }: RequestParamsYear) => void;
   getMonthTimeSeries: ({
     indicator,
@@ -30,6 +33,8 @@ interface IRenderProps {
     month
   }: RequestParamsMonth) => void;
   getTimeSeries: ({ indicator, country }: RequestParams) => void;
+  tool: 'Year' | 'MonthTS' | 'FullTS';
+  setTool: (tool: string) => void;
 }
 
 const baseUrl = 'http://localhost:4000';
@@ -44,7 +49,9 @@ export class QueryStateProvider extends React.Component<{}, IState> {
     this.state = {
       isoCountry: null,
       indicator: null,
-      year: null
+      year: null,
+      month: null,
+      tool: null
     };
   }
 
@@ -77,8 +84,15 @@ export class QueryStateProvider extends React.Component<{}, IState> {
     return isoCountry && indicator && year ? false : true;
   };
 
+  lockedBuilder = () => {
+    return (this.state.tool && true)
+  };
+
+  setTool = (mode) => this.setState({tool: mode})
+
   // needs definition
   setQueryParam = param => {
+    console.log(param)
     switch (param.type) {
       case 'indicator':
         return this.setState({
@@ -95,6 +109,11 @@ export class QueryStateProvider extends React.Component<{}, IState> {
           ...this.state,
           year: param.payload
         });
+      case 'month':
+        return this.setState({
+          ...this.state,
+          month: param.payload
+        });
       default:
         return this.state;
     }
@@ -107,9 +126,12 @@ export class QueryStateProvider extends React.Component<{}, IState> {
         value={{
           setQueryParam: this.setQueryParam,
           lockedQuery: this.lockedQuery,
+          lockedBuilder: this.lockedBuilder,
           getYear: this.getYear,
           getMonthTimeSeries: this.getMonthTimeSeries,
-          getTimeSeries: this.getTimeSeries
+          getTimeSeries: this.getTimeSeries,
+          tool: this.state.tool,
+          setTool: this.setTool,
         }}
       >
         {this.props.children}

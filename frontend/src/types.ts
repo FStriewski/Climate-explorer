@@ -5,11 +5,6 @@ export enum Position {
   RIGHT
 }
 
-export enum Mode {
-  DRAG,
-  EDIT
-}
-
 export interface IDimensions {
   x: number;
   y: number;

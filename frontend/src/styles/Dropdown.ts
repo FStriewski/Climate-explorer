@@ -4,19 +4,17 @@ import { Button } from './Button';
 
 export const Dropdown = styled.div`
   position: relative;
-  margin-left: 16px;
 `;
 
 export const DropdownContent = styled.div`
   position: absolute;
-  min-width: 170px;
-  overflow: hidden;
+  min-width: 150px;
   background-color: ${COMMON.COLOR_1};
   box-shadow: 0 1px 8px 0 ${SCHEMA_1.COLOR_3};
   border-radius: 5px;
   background-clip: padding-box;
-  z-index: 100;
-  `;
+  z-index: 50;
+`;
 
 export const Zooming = styled.div`
   margin-left: auto;
@@ -50,8 +48,9 @@ export const DropdownListItem = styled.li<{ enabled?: boolean }>`
   align-items: center;
   position: relative;
   color: ${COMMON.COLOR_2};
-  font-size: 14px;
- 
+  z-index: 50;
+  overflow: visible;
+
   &:hover {
     background-color: ${SCHEMA_1.COLOR_1};
     cursor: pointer;
@@ -64,4 +63,6 @@ export const DropdownList = styled.ul`
   list-style: none;
   padding: 8px 0;
   margin: 0;
+  z-index: 50;
+  overflow: visible;
 `;

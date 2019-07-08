@@ -6,22 +6,37 @@ import { Indicator } from './Dropdowns/Indicator';
 import QueryState from '../../data/QueryState';
 import { Year } from './Year';
 import { QueryButton } from '../../styles/Button';
+import { Mode } from './Dropdowns/Mode';
+
+import {
+  toolgroupYear,
+  toolgroupMonthTS,
+  toolgroupFullTS
+} from '../sidebar/Toolgroups';
+
+const renderToolgroup = ( tool, setQueryParam ) => {
+  console.log(setQueryParam);
+  switch (tool) {
+    case 'Year':
+      return toolgroupYear(setQueryParam);
+    case 'MonthTS':
+      return toolgroupMonthTS(setQueryParam);
+    case 'FullTS':
+      return toolgroupFullTS(setQueryParam);
+    default:
+      return;
+  }
+};
 
 /* tslint:disable: jsx-no-lambda */
 const SideBar = () => (
   <QueryState>
-    {({ setQueryParam, lockedQuery }) => (
+    {({ setQueryParam, lockedQuery, tool, setTool }) => (
       <StyledSideBar>
-        <SideBarHeader />
-        <Box>
-          <Country setQuery={setQueryParam} />
-        </Box>
-        <Box>
-          <Year setQuery={setQueryParam} />
-        </Box>
-        <Box>
-          <Indicator setQuery={setQueryParam} />
-        </Box>
+        <SideBarHeader>
+          <Mode setTool={setTool} />
+        </SideBarHeader>
+        {renderToolgroup( tool, setQueryParam )}
         <Box>
           <QueryButton onClick={setQueryParam} disabled={lockedQuery()}>
             Query
