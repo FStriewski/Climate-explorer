@@ -13,7 +13,6 @@ export const Header = styled.div`
   height: 40px;
   justify-content: space-between;
   position: sticky;
-  // width: 100%;
   top: 0;
   z-index: 10;
   user-select: none;

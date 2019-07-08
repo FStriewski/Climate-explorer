@@ -22,9 +22,10 @@ export const Button = styled.button`
   text-align: center;
   white-space: nowrap;
   background-color: ${SCHEMA_1.COLOR_3};
-  
+
   color: ${COMMON.COLOR_1};
   margin: 10px;
+  margin-left: 20px;
 `;
 
 export const QueryButton = styled<{ disabled?: boolean }, 'button'>('button')`
@@ -48,9 +49,10 @@ export const QueryButton = styled<{ disabled?: boolean }, 'button'>('button')`
   text-align: center;
   white-space: nowrap;
   background-color: ${props => (props.disabled ? '#a0a0a0' : SCHEMA_1.COLOR_3)};
-  
+
   color: ${COMMON.COLOR_1};
   margin: 10px;
+  margin-left: 40px;
 `;
 
 export const InputButton = styled.button`
@@ -69,6 +71,7 @@ export const InputButton = styled.button`
   white-space: nowrap;
   background-color: ${SCHEMA_1.COLOR_3};
   color: ${COMMON.COLOR_1};
+  margin: 10px 0px;
 `;
 
 export const Input = styled.input`
@@ -81,4 +84,5 @@ export const Input = styled.input`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 10px;
 `;

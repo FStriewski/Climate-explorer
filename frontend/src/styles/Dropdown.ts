@@ -16,29 +16,6 @@ export const DropdownContent = styled.div`
   z-index: 50;
 `;
 
-export const Zooming = styled.div`
-  margin-left: auto;
-  width: 80px;
-  display: flex;
-  align-items: center;
-  position: relative;
-
-  ${Button} {
-    z-index: 1;
-    position: relative;
-  }
-
-  ${Dropdown} {
-    position: absolute;
-    left: 0;
-    right: 0;
-
-    ${Button} {
-      color: ${SCHEMA_1.COLOR_1};
-    }
-  }
-`;
-
 export const DropdownListItem = styled.li<{ enabled?: boolean }>`
   padding: 0 16px;
   margin: 0;
@@ -52,7 +29,7 @@ export const DropdownListItem = styled.li<{ enabled?: boolean }>`
   overflow: visible;
 
   &:hover {
-    background-color: ${SCHEMA_1.COLOR_1};
+    background-color: ${SCHEMA_1.COLOR_2};
     cursor: pointer;
     color: ${SCHEMA_1.COLOR_1};
   }

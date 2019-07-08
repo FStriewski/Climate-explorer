@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { SideBar as StyledSideBar, Box } from '../../styles/SideBar';
-import { SideBarHeader } from './Header';
-import { Country } from './Dropdowns/Country';
-import { Indicator } from './Dropdowns/Indicator';
+
 import QueryState from '../../data/QueryState';
-import { Year } from './Year';
 import { QueryButton } from '../../styles/Button';
 import { Mode } from './Dropdowns/Mode';
 
@@ -14,8 +11,7 @@ import {
   toolgroupFullTS
 } from '../sidebar/Toolgroups';
 
-const renderToolgroup = ( tool, setQueryParam ) => {
-  console.log(setQueryParam);
+const renderToolgroup = (tool, setQueryParam) => {
   switch (tool) {
     case 'Year':
       return toolgroupYear(setQueryParam);
@@ -28,15 +24,14 @@ const renderToolgroup = ( tool, setQueryParam ) => {
   }
 };
 
-/* tslint:disable: jsx-no-lambda */
 const SideBar = () => (
   <QueryState>
     {({ setQueryParam, lockedQuery, tool, setTool }) => (
       <StyledSideBar>
-        <SideBarHeader>
+        <Box>
           <Mode setTool={setTool} />
-        </SideBarHeader>
-        {renderToolgroup( tool, setQueryParam )}
+        </Box>
+        {renderToolgroup(tool, setQueryParam)}
         <Box>
           <QueryButton onClick={setQueryParam} disabled={lockedQuery()}>
             Query

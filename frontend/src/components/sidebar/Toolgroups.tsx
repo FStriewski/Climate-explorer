@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { SideBar as StyledSideBar, Box } from '../../styles/SideBar';
-import { SideBarHeader } from './Header';
+import { SideBar as StyledSideBar, Box, Toolgroup } from '../../styles/SideBar';
 import { Country } from './Dropdowns/Country';
 import { Indicator } from './Dropdowns/Indicator';
 import { Year } from './Year';
 import { Month } from './Dropdowns/Month';
 
 export const toolgroupYear = ( setQueryParam ) => (
-  <React.Fragment>
+  <Toolgroup>
     <Box>
       <Country setQuery={setQueryParam} />
     </Box>
@@ -17,11 +16,11 @@ export const toolgroupYear = ( setQueryParam ) => (
     <Box>
       <Indicator setQuery={setQueryParam} />
     </Box>
-  </React.Fragment>
+  </Toolgroup>
 );
 
 export const toolgroupMonthTS = (setQueryParam ) => (
-  <React.Fragment>
+  <Toolgroup>
     <Box>
       <Country setQuery={setQueryParam} />
     </Box>
@@ -31,16 +30,16 @@ export const toolgroupMonthTS = (setQueryParam ) => (
     <Box>
       <Indicator setQuery={setQueryParam} />
     </Box>
-  </React.Fragment>
+  </Toolgroup>
 );
 
 export const toolgroupFullTS = (setQueryParam ) => (
-  <React.Fragment>
+  <Toolgroup>
     <Box>
       <Country setQuery={setQueryParam} />
     </Box>
     <Box>
       <Indicator setQuery={setQueryParam} />
     </Box>
-  </React.Fragment>
+  </Toolgroup>
 );
