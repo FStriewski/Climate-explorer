@@ -10,13 +10,13 @@ import '../../styles/React-Grid.css';
 const MainStage = () => (
   <QueryState>
     {({ state }) => (
-      <StyledMainStage>
+      <StyledMainStage id="print">
         <GridLayout className="layout" cols={12} rowHeight={30} width={1200}>
           {state.charts.length &&
             state.charts.map(record => (
               <Chart key={record.id} data-grid={{ x: 1, y: 0, w: 4, h: 6 }}>
-                  <SingleLineChart data={record.data} />
-                  <p>{record.description}</p>
+                <SingleLineChart data={record.data} />
+                <p>{record.description}</p>
               </Chart>
             ))}
         </GridLayout>

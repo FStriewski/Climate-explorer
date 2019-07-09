@@ -7,7 +7,6 @@ export const Header = styled.div`
   background-color: ${SCHEMA_1.COLOR_1};
   color: white;
 
-  align-items: center;
   display: flex;
   flex-shrink: 0;
   height: 40px;
@@ -16,4 +15,10 @@ export const Header = styled.div`
   top: 0;
   z-index: 10;
   user-select: none;
+
+  button {
+    position: absolute;
+    right: 5px;
+    top: -3px;
+  }
 `;
