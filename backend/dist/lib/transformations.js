@@ -42,12 +42,12 @@ exports.yearTagTSArray = response => {
     return yearTaggedValues;
 };
 exports.filterToMonthTS = (fullTS, month) => {
-    return fullTS.map(year => {
+    return fullTS.reduce((obj, year) => {
         const label = year[0];
-        const targetMonth = year[1]
-            .filter(m => m[0][0] === parseInt(month, 10));
+        const targetMonth = year[1].filter(m => m[0][0] === parseInt(month, 10));
         const value = targetMonth[0][1];
-        return { [label]: value };
-    });
+        obj[label] = value;
+        return obj;
+    }, {});
 };
 //# sourceMappingURL=transformations.js.map

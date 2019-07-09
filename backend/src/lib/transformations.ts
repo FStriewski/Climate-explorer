@@ -17,22 +17,22 @@ export const generateTSArray = ({
 };
 
 export const determineTargetRange = (
-         year: number,
-         iso: string,
-         indicator: string,
-       ) => {
-         if (1920 <= year && year <= 1939) {
-           return `${baseUrl}/mavg/${indicator}/1920/1939/${iso}`;
-         } else if (1940 <= year && year <= 1959) {
-           return `${baseUrl}/mavg/${indicator}/1940/1959/${iso}`;
-         } else if (1960 <= year && year <= 1979) {
-           return `${baseUrl}/mavg/${indicator}/1960/1979/${iso}`;
-         } else if (1980 <= year && year <= 1999) {
-           return `${baseUrl}/mavg/${indicator}/1980/1999/${iso}`;
-         } else {
-           return;
-         }
-       };
+  year: number,
+  iso: string,
+  indicator: string
+) => {
+  if (1920 <= year && year <= 1939) {
+    return `${baseUrl}/mavg/${indicator}/1920/1939/${iso}`;
+  } else if (1940 <= year && year <= 1959) {
+    return `${baseUrl}/mavg/${indicator}/1940/1959/${iso}`;
+  } else if (1960 <= year && year <= 1979) {
+    return `${baseUrl}/mavg/${indicator}/1960/1979/${iso}`;
+  } else if (1980 <= year && year <= 1999) {
+    return `${baseUrl}/mavg/${indicator}/1980/1999/${iso}`;
+  } else {
+    return;
+  }
+};
 
 export const yearTagTSArray = response => {
   const responseCollection = response.map(r => r.data);
@@ -52,12 +52,13 @@ export const yearTagTSArray = response => {
 };
 
 export const filterToMonthTS = (fullTS, month: string) => {
-  return fullTS.map(year => {
+  return fullTS.reduce((obj: {}, year) => {
     const label = year[0];
-    const targetMonth = year[1]
-    .filter(m => m[0][0] === parseInt(month,10));
-    const value = targetMonth[0][1]
+    const targetMonth = year[1].filter(m => m[0][0] === parseInt(month, 10));
 
-    return { [label]: value };
-  });
+    const value = targetMonth[0][1];
+
+    obj[label] = value;
+    return obj;
+  }, {});
 };

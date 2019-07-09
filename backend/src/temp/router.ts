@@ -26,17 +26,15 @@ const router = express.Router();
 // });
 
 // Specific year (12 months) for country
-router.get('/temp/:indicator/:iso/:targetYear/', (req, res) => {
+router.get('/year/:indicator/:iso/:targetYear/', (req, res) => {
   const { iso, targetYear, indicator } = req.params;
   const year = parseInt(targetYear, 10);
   
   const yearRange = determineTargetRange(year, iso, indicator);
-  console.log(yearRange);
   
   axios
   .get(yearRange)
   .then(response => {
-    console.log(response.data)
       const monthsByYear = response.data.map(
         (record: APIresponse, index: number) => [
           record.fromYear + index,
@@ -62,7 +60,8 @@ router.get('/temp/:indicator/:iso/:targetYear/', (req, res) => {
 });
 
 // Full time series of a specific month for country
-router.get('/monthTimeSeries/:indicator/:iso/:month/', (req, res) => {
+router.get('/month/:indicator/:iso/:month', (req, res) => {
+  console.log(req.params);
   const urlCollection = generateTSArray({
     type: 'mavg',
     indicator: req.params.indicator,
@@ -75,6 +74,8 @@ router.get('/monthTimeSeries/:indicator/:iso/:month/', (req, res) => {
     .then(response => {
       const fullTimeSeries = yearTagTSArray(response);
       const monthlyValues = filterToMonthTS(fullTimeSeries, req.params.month);
+    console.log(monthlyValues);
+
       res.send(monthlyValues);
     })
     .catch(error => {
@@ -82,8 +83,8 @@ router.get('/monthTimeSeries/:indicator/:iso/:month/', (req, res) => {
     });
 });
 
-// Full time series (monts) for country
-router.get('/timeSeries/:indicator/:iso/', (req, res) => {
+// Full time series (months) for country
+router.get('/full/:indicator/:iso/', (req, res) => {
   const urlCollection = generateTSArray({
     type: 'mavg',
     indicator: req.params.indicator,

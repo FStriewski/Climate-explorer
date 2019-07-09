@@ -26,15 +26,13 @@ const router = express.Router();
 //     });
 // });
 // Specific year (12 months) for country
-router.get('/temp/:indicator/:iso/:targetYear/', (req, res) => {
+router.get('/year/:indicator/:iso/:targetYear/', (req, res) => {
     const { iso, targetYear, indicator } = req.params;
     const year = parseInt(targetYear, 10);
     const yearRange = transformations_1.determineTargetRange(year, iso, indicator);
-    console.log(yearRange);
     axios_1.default
         .get(yearRange)
         .then(response => {
-        console.log(response.data);
         const monthsByYear = response.data.map((record, index) => [
             record.fromYear + index,
             record.monthVals
@@ -51,7 +49,8 @@ router.get('/temp/:indicator/:iso/:targetYear/', (req, res) => {
     });
 });
 // Full time series of a specific month for country
-router.get('/monthTimeSeries/:indicator/:iso/:month/', (req, res) => {
+router.get('/month/:indicator/:iso/:month', (req, res) => {
+    console.log(req.params);
     const urlCollection = transformations_1.generateTSArray({
         type: 'mavg',
         indicator: req.params.indicator,
@@ -62,14 +61,15 @@ router.get('/monthTimeSeries/:indicator/:iso/:month/', (req, res) => {
         .then(response => {
         const fullTimeSeries = transformations_1.yearTagTSArray(response);
         const monthlyValues = transformations_1.filterToMonthTS(fullTimeSeries, req.params.month);
+        console.log(monthlyValues);
         res.send(monthlyValues);
     })
         .catch(error => {
         console.log(error);
     });
 });
-// Full time series (monts) for country
-router.get('/timeSeries/:indicator/:iso/', (req, res) => {
+// Full time series (months) for country
+router.get('/full/:indicator/:iso/', (req, res) => {
     const urlCollection = transformations_1.generateTSArray({
         type: 'mavg',
         indicator: req.params.indicator,
