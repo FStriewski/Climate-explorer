@@ -23,7 +23,7 @@ console.log(indicator, isoCountry, year )
     return;
   }
   const response = await axios.get(
-    `${baseUrl}/temp/${indicator}/${isoCountry}/${year}/`
+    `${baseUrl}/year/${indicator}/${isoCountry}/${year}/`
   );
 console.log(response)
   return response.data;
@@ -35,7 +35,7 @@ export const getMonthTimeSeries = async (props: RequestParamsMonth) => {
     return;
   }
   const response = await axios.get(
-    `${baseUrl}/monthTimeSeries/${indicator}/${isoCountry}/${month}/`
+    `${baseUrl}/month/${indicator}/${isoCountry}/${month}/`
   );
 
   return response.data;
@@ -48,7 +48,7 @@ export const getTimeSeries = async (props: RequestParams) => {
   }
 
   const response = await axios.get(
-    `${baseUrl}/timeSeries/${indicator}/${isoCountry}/`
+    `${baseUrl}/full/${indicator}/${isoCountry}/`
   );
 
   return response.data;
