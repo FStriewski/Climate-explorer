@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const express = __importStar(require("express"));
 const transformations_1 = require("../lib/transformations");
+const types_1 = require("../lib/types");
 const router = express.Router();
 // const testUrl = `http://climatedataapi.worldbank.org/climateweb/rest/v1/country/${type}/${indicator}/${start}/${end}/${iso}`
 // router.get('/test', (req, res) => {
@@ -59,27 +60,27 @@ router.get('/month/:indicator/:iso/:month', (req, res) => {
     const promiseCollection = urlCollection.map(url => axios_1.default.get(url));
     Promise.all(promiseCollection)
         .then(response => {
-        const fullTimeSeries = transformations_1.yearTagTSArray(response);
-        const monthlyValues = transformations_1.filterToMonthTS(fullTimeSeries, req.params.month);
-        console.log(monthlyValues);
+        const fullTimeSeries = transformations_1.tagTSArray(response, types_1.Parameter.MONTH);
+        const monthlyValues = transformations_1.reduceToMonthTS(fullTimeSeries, req.params.month);
         res.send(monthlyValues);
     })
         .catch(error => {
         console.log(error);
     });
 });
-// Full time series (months) for country
+// Full time series (all years) for country
 router.get('/full/:indicator/:iso/', (req, res) => {
     const urlCollection = transformations_1.generateTSArray({
-        type: 'mavg',
+        type: 'annualavg',
         indicator: req.params.indicator,
         iso: req.params.iso
     });
     const promiseCollection = urlCollection.map(url => axios_1.default.get(url));
     Promise.all(promiseCollection)
         .then(response => {
-        const fullTimeSeries = transformations_1.yearTagTSArray(response);
-        res.send(fullTimeSeries);
+        const fullTimeSeries = transformations_1.tagTSArray(response, types_1.Parameter.ANNUAL);
+        const result = transformations_1.reduceToFullTS(fullTimeSeries);
+        res.send(result);
     })
         .catch(error => {
         console.log(error);

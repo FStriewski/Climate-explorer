@@ -2,11 +2,12 @@ import axios from 'axios';
 import * as express from 'express';
 import {
   generateTSArray,
-  yearTagTSArray,
+  tagTSArray,
   determineTargetRange,
-  filterToMonthTS
+  reduceToMonthTS,
+  reduceToFullTS
 } from '../lib/transformations';
-import { APIresponse, RecordSet } from '../lib/types';
+import { APIresponse, RecordSet, Parameter } from '../lib/types';
 
 const router = express.Router();
 
@@ -72,10 +73,8 @@ router.get('/month/:indicator/:iso/:month', (req, res) => {
 
   Promise.all(promiseCollection)
     .then(response => {
-      const fullTimeSeries = yearTagTSArray(response);
-      const monthlyValues = filterToMonthTS(fullTimeSeries, req.params.month);
-    console.log(monthlyValues);
-
+      const fullTimeSeries = tagTSArray(response, Parameter.MONTH);
+      const monthlyValues = reduceToMonthTS(fullTimeSeries, req.params.month);
       res.send(monthlyValues);
     })
     .catch(error => {
@@ -83,10 +82,10 @@ router.get('/month/:indicator/:iso/:month', (req, res) => {
     });
 });
 
-// Full time series (months) for country
+// Full time series (all years) for country
 router.get('/full/:indicator/:iso/', (req, res) => {
   const urlCollection = generateTSArray({
-    type: 'mavg',
+    type: 'annualavg',
     indicator: req.params.indicator,
     iso: req.params.iso
   });
@@ -95,8 +94,10 @@ router.get('/full/:indicator/:iso/', (req, res) => {
 
   Promise.all(promiseCollection)
     .then(response => {
-      const fullTimeSeries = yearTagTSArray(response);
-      res.send(fullTimeSeries);
+      const fullTimeSeries = tagTSArray(response, Parameter.ANNUAL);
+      const result = reduceToFullTS(fullTimeSeries);
+
+      res.send(result);
     })
     .catch(error => {
       console.log(error);

@@ -1,4 +1,4 @@
-import { TSArrayInput, APIresponse } from '../lib/types';
+import { TSArrayInput, APIresponse, RecordSet } from '../lib/types';
 
 const baseUrl =
   'http://climatedataapi.worldbank.org/climateweb/rest/v1/country/';
@@ -34,31 +34,34 @@ export const determineTargetRange = (
   }
 };
 
-export const yearTagTSArray = response => {
+export const tagTSArray = (response, parameter: string) => {
   const responseCollection = response.map(r => r.data);
   const flatResponse = [].concat.apply([], responseCollection);
-  const yearTaggedValues = flatResponse.map((d: APIresponse, index: number) => {
+
+  return flatResponse.map((d: APIresponse, index: number) => {
     const startYear = 1920;
     const year = String(startYear + index);
-    const monthArray = d.monthVals;
-    const monthTaggedValues = monthArray.map((val: number, index: number) => [
+    const tsArray = d[parameter];
+    const taggedValues = tsArray.map((val: number, index: number) => [
       [index + 1],
       val
     ]);
-    return [[year], monthTaggedValues];
+    return [year, taggedValues];
   });
-  console.log(yearTaggedValues);
-  return yearTaggedValues;
 };
 
-export const filterToMonthTS = (fullTS, month: string) => {
-  return fullTS.reduce((obj: {}, year) => {
+export const reduceToMonthTS = (fullTS, month: string) =>
+  fullTS.reduce((obj: {}, year) => {
     const label = year[0];
     const targetMonth = year[1].filter(m => m[0][0] === parseInt(month, 10));
-
     const value = targetMonth[0][1];
-
     obj[label] = value;
     return obj;
   }, {});
-};
+
+export const reduceToFullTS = fullTS =>
+  fullTS.reduce((obj: {}, record) => {
+    const label = record[0];
+    obj[label] = record[1][0][1];
+    return obj;
+  }, {});

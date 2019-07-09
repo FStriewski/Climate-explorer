@@ -9,7 +9,13 @@ export type APIresponse = {
   toYear: number;
   gcm: string;
   variable: string;
-  monthVals: number[];
-}
+  monthVals?: number[];
+  annualData?: number[];
+};
 
 export type RecordSet = [number, number[]]
+
+export enum Parameter {
+  ANNUAL = 'annualData',
+  MONTH = 'monthVals'
+}

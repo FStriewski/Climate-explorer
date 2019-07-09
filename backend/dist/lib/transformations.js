@@ -25,29 +25,30 @@ exports.determineTargetRange = (year, iso, indicator) => {
         return;
     }
 };
-exports.yearTagTSArray = response => {
+exports.tagTSArray = (response, parameter) => {
     const responseCollection = response.map(r => r.data);
     const flatResponse = [].concat.apply([], responseCollection);
-    const yearTaggedValues = flatResponse.map((d, index) => {
+    return flatResponse.map((d, index) => {
         const startYear = 1920;
         const year = String(startYear + index);
-        const monthArray = d.monthVals;
-        const monthTaggedValues = monthArray.map((val, index) => [
+        const tsArray = d[parameter];
+        const taggedValues = tsArray.map((val, index) => [
             [index + 1],
             val
         ]);
-        return [[year], monthTaggedValues];
+        return [year, taggedValues];
     });
-    console.log(yearTaggedValues);
-    return yearTaggedValues;
 };
-exports.filterToMonthTS = (fullTS, month) => {
-    return fullTS.reduce((obj, year) => {
-        const label = year[0];
-        const targetMonth = year[1].filter(m => m[0][0] === parseInt(month, 10));
-        const value = targetMonth[0][1];
-        obj[label] = value;
-        return obj;
-    }, {});
-};
+exports.reduceToMonthTS = (fullTS, month) => fullTS.reduce((obj, year) => {
+    const label = year[0];
+    const targetMonth = year[1].filter(m => m[0][0] === parseInt(month, 10));
+    const value = targetMonth[0][1];
+    obj[label] = value;
+    return obj;
+}, {});
+exports.reduceToFullTS = fullTS => fullTS.reduce((obj, record) => {
+    const label = record[0];
+    obj[label] = record[1][0][1];
+    return obj;
+}, {});
 //# sourceMappingURL=transformations.js.map
