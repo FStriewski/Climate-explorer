@@ -26,33 +26,35 @@ const router = express.Router();
 //     });
 // });
 // Specific year (12 months) for country
-router.get('/temp/:iso/:targetYear', (req, res) => {
-    const { iso, targetYear } = req.params;
+router.get('/temp/:indicator/:iso/:targetYear/', (req, res) => {
+    const { iso, targetYear, indicator } = req.params;
     const year = parseInt(targetYear, 10);
-    const yearRange = transformations_1.determineTargetRange(year, iso);
+    const yearRange = transformations_1.determineTargetRange(year, iso, indicator);
+    console.log(yearRange);
     axios_1.default
         .get(yearRange)
         .then(response => {
+        console.log(response.data);
         const monthsByYear = response.data.map((record, index) => [
             record.fromYear + index,
             record.monthVals
         ]);
         const result = monthsByYear.find((record) => record[0] === year);
-        const monthTaggedValues = result[1].map((val, index) => [
-            [index + 1],
-            val
-        ]);
-        res.send([[year], monthTaggedValues]);
+        const monthTaggedValues = result[1].reduce((obj, val, index) => {
+            obj[index + 1] = val;
+            return obj;
+        }, {});
+        res.send(monthTaggedValues);
     })
         .catch(error => {
         console.log(error);
     });
 });
 // Full time series of a specific month for country
-router.get('/tempTS/:iso/:month', (req, res) => {
+router.get('/monthTimeSeries/:indicator/:iso/:month/', (req, res) => {
     const urlCollection = transformations_1.generateTSArray({
         type: 'mavg',
-        indicator: 'tas',
+        indicator: req.params.indicator,
         iso: req.params.iso
     });
     const promiseCollection = urlCollection.map(url => axios_1.default.get(url));
@@ -67,10 +69,10 @@ router.get('/tempTS/:iso/:month', (req, res) => {
     });
 });
 // Full time series (monts) for country
-router.get('/tempTS/:iso', (req, res) => {
+router.get('/timeSeries/:indicator/:iso/', (req, res) => {
     const urlCollection = transformations_1.generateTSArray({
         type: 'mavg',
-        indicator: 'tas',
+        indicator: req.params.indicator,
         iso: req.params.iso
     });
     const promiseCollection = urlCollection.map(url => axios_1.default.get(url));

@@ -16,19 +16,23 @@ export const generateTSArray = ({
   return [till1939, till1959, till1979, till1999];
 };
 
-export const determineTargetRange = (year: number, iso: string) => {
-  if (1920 <= year && year <= 1939) {
-    return `${baseUrl}/mavg/tas/1920/1939/${iso}`;
-  } else if (1940 <= year && year <= 1959) {
-    return `${baseUrl}/mavg/tas/1940/1959/${iso}`;
-  } else if (1960 <= year && year <= 1979) {
-    return `${baseUrl}/mavg/tas/1960/1979/${iso}`;
-  } else if (1980 <= year && year <= 1999) {
-    return `${baseUrl}/mavg/tas/1980/1999/${iso}`;
-  } else {
-    return;
-  }
-};
+export const determineTargetRange = (
+         year: number,
+         iso: string,
+         indicator: string,
+       ) => {
+         if (1920 <= year && year <= 1939) {
+           return `${baseUrl}/mavg/${indicator}/1920/1939/${iso}`;
+         } else if (1940 <= year && year <= 1959) {
+           return `${baseUrl}/mavg/${indicator}/1940/1959/${iso}`;
+         } else if (1960 <= year && year <= 1979) {
+           return `${baseUrl}/mavg/${indicator}/1960/1979/${iso}`;
+         } else if (1980 <= year && year <= 1999) {
+           return `${baseUrl}/mavg/${indicator}/1980/1999/${iso}`;
+         } else {
+           return;
+         }
+       };
 
 export const yearTagTSArray = response => {
   const responseCollection = response.map(r => r.data);
