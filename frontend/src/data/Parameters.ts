@@ -1,13 +1,11 @@
+import { Indicator } from 'src/lib/types';
+
 export interface ICountry {
   label: string;
   iso: string;
 }
 
 export const COUNTRIES: ICountry[] = [
-  {
-    label: 'Antarctica',
-    iso: 'ATA'
-  },
   {
     label: 'Australia',
     iso: 'AUS'
@@ -130,12 +128,12 @@ export interface IIndicator {
 export const INDICATORS: IIndicator[] = [
   {
     label: 'Temperature',
-    ind: 'tas'
+    ind: Indicator.TEMP
   },
   {
     label: 'Precepitation',
-    ind: 'pr'
-  },
+    ind: Indicator.PREC
+  }
 ];
 export interface IMode {
   label: string;

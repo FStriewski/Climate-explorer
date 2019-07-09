@@ -6,6 +6,8 @@ import { QueryButton } from '../../styles/Button';
 import { Mode } from './Dropdowns/Mode';
 import { getYear, getMonthTimeSeries, getTimeSeries } from '../../data/Queries';
 
+import { IState } from '../../lib/types';
+
 import {
   toolgroupYear,
   toolgroupMonthTS,
@@ -27,15 +29,17 @@ const renderToolgroup = (tool, setQueryParam) => {
   }
 };
 
-const makeCall =  async (state, addRecord, flushState) => {
-  console.log(state.tool)
+const makeCall = async (state, addRecord, flushState) => {
   switch (state.tool) {
     case 'Year':
       const yearData = await getYear(state);
       addRecord({
         id: generateId(),
         data: yearData,
-        description: 'Single Year'
+        color: state.indicator,
+        description: `Selected year, avg of ${state.indicator} for ${
+          state.isoCountry
+        }`
       });
       flushState();
       return;
@@ -44,7 +48,10 @@ const makeCall =  async (state, addRecord, flushState) => {
       addRecord({
         id: generateId(),
         data: monthData,
-        description: 'Month TS'
+        color: state.indicator,
+        description: `Selected month, avg of ${state.indicator} for ${
+          state.isoCountry
+        }`
       });
       flushState();
 
@@ -55,7 +62,8 @@ const makeCall =  async (state, addRecord, flushState) => {
       addRecord({
         id: generateId(),
         data: tsData,
-        description: 'Full TS'
+        description: `Yearly avg of ${state.indicator} for ${state.isoCountry}`,
+        color: state.indicator
       });
       flushState();
 

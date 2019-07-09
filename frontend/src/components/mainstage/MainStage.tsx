@@ -13,9 +13,12 @@ const MainStage = () => (
       <StyledMainStage id="print">
         <GridLayout className="layout" cols={12} rowHeight={30} width={1200}>
           {state.charts.length &&
-            state.charts.map(record => (
+            state.charts.map((record, index) => (
               <Chart key={record.id} data-grid={{ x: 1, y: 0, w: 4, h: 6 }}>
-                <SingleLineChart data={record.data} />
+                <SingleLineChart
+                  data={record.data}
+                  color={state.charts[index].color}
+                />
                 <p>{record.description}</p>
               </Chart>
             ))}

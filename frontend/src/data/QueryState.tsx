@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Chart, IState } from '../lib/types';
+import { Chart, IState, Indicator } from '../lib/types';
 
 interface IRenderProps {
   setQueryParam: (param) => void;
@@ -27,10 +27,11 @@ const data = {
   '12': 2.79226248
 };
 
-const fakeChart = {
+const fakeChart: Chart = {
   id: '123',
   data,
-  description: 'Fakechart'
+  description: 'Fakechart',
+  color: Indicator.TEMP
 }
 
 /* tslint:disable-next-line:no-object-literal-type-assertion */
