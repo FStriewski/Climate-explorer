@@ -15,17 +15,6 @@ const express = __importStar(require("express"));
 const transformations_1 = require("../lib/transformations");
 const types_1 = require("../lib/types");
 const router = express.Router();
-// const testUrl = `http://climatedataapi.worldbank.org/climateweb/rest/v1/country/${type}/${indicator}/${start}/${end}/${iso}`
-// router.get('/test', (req, res) => {
-//   axios.get('http://climatedataapi.worldbank.org/climateweb/rest/v1/country/mavg/tas/1940/1959/NLD/')
-//     .then(response => {
-//       console.log(response.data);
-//       res.send(response.data)
-//     })
-//     .catch(error => {
-//       console.log(error);
-//     });
-// });
 // Specific year (12 months) for country
 router.get('/year/:indicator/:iso/:targetYear/', (req, res) => {
     const { iso, targetYear, indicator } = req.params;
