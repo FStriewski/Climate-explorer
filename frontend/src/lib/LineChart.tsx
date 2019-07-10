@@ -10,6 +10,9 @@ export const SingleLineChart = ({ data, color }) => {
       width="100%"
       colors={color === Indicator.TEMP ? ['#ff0000'] : ['#ADD8E6']}
       height="100%"
+      xtitle="Time"
+      ytitle="T. [*C] / P. [mm]"
+      library={{ backgroundColor: '#fff' }}
     />
   );
 };
