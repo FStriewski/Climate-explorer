@@ -3,9 +3,7 @@ import { COMMON, SCHEMA_1, SCHEMA_2, SCHEMA_3 } from './variables';
 
 export const Button = styled.button`
   display: inline-block;
-
   transition: background 0.2s;
-
   height: 25px;
   line-height: 1;
   min-width: 25px;
@@ -13,16 +11,13 @@ export const Button = styled.button`
   border-radius: 5px;
   border: none;
   outline: none;
-
   background: transparent;
   cursor: pointer;
-
   padding: 0 16px;
   box-shadow: none;
   text-align: center;
   white-space: nowrap;
   background-color: ${SCHEMA_1.COLOR_3};
-
   color: ${COMMON.COLOR_1};
   margin: 10px;
   margin-left: 20px;
@@ -30,9 +25,7 @@ export const Button = styled.button`
 
 export const QueryButton = styled<{ disabled?: boolean }, 'button'>('button')`
   display: inline-block;
-
   transition: background 0.2s;
-
   height: 25px;
   line-height: 1;
   min-width: 25px;
@@ -40,16 +33,13 @@ export const QueryButton = styled<{ disabled?: boolean }, 'button'>('button')`
   border-radius: 5px;
   border: none;
   outline: none;
-
   background: transparent;
   cursor: pointer;
-
   padding: 0 16px;
   box-shadow: none;
   text-align: center;
   white-space: nowrap;
   background-color: ${props => (props.disabled ? '#a0a0a0' : SCHEMA_1.COLOR_3)};
-
   color: ${COMMON.COLOR_1};
   margin: 10px;
   margin-left: 40px;

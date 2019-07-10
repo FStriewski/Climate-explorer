@@ -1,7 +1,6 @@
 import * as React from 'react';
 const { useState } = React;
 import OutsideClickHandler from 'react-outside-click-handler';
-
 import {
   Dropdown as StyledDropdown,
   DropdownContent

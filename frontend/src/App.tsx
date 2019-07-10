@@ -8,17 +8,14 @@ import './styles/index';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 
-
 class App extends React.Component {
 
   printDocument = () => {
     const input = document.getElementById('print');
-    console.log(input);
     html2canvas(input).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
       pdf.addImage(imgData, 'JPEG', 0, 0);
-      // pdf.output('dataurlnewwindow');
       pdf.save('download.pdf');
     });
   }

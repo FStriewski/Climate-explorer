@@ -1,6 +1,5 @@
 import styled from './styled-components';
 import { COMMON, SCHEMA_1 } from './variables';
-import { Button } from './Button';
 
 export const Dropdown = styled.div`
   position: relative;

@@ -8,7 +8,7 @@ interface IState {
 interface IRenderProps {
   select: (e: React.MouseEvent, id: ID) => void;
   selectedId: ID | null;
-};
+}
 
 /* tslint:disable-next-line:no-object-literal-type-assertion */
 const Ctx = React.createContext({} as IRenderProps);
@@ -19,9 +19,8 @@ export default Selection;
 
 const selectId = (id: ID): IState => ({ selectedId: id });
 const clearId = (): IState => ({ selectedId: null });
-const stopPropagation = (e: React.MouseEvent) => (
-  e.nativeEvent.stopImmediatePropagation()
- );
+const stopPropagation = (e: React.MouseEvent) =>
+  e.nativeEvent.stopImmediatePropagation();
 
 export class SelectionStateProvider extends React.Component<{}, IState> {
   readonly state: IState = { selectedId: null };
@@ -34,18 +33,16 @@ export class SelectionStateProvider extends React.Component<{}, IState> {
     document.removeEventListener('mousedown', this.clear);
   }
 
-  clear = () => 
-    this.setState(clearId);
-    
+  clear = () => this.setState(clearId);
+
   select = (e: React.MouseEvent, id: ID) => {
-      stopPropagation(e);
-        this.clear()
-        this.setState(selectId(id));
-        console.log(this.state.selectedId)
+    stopPropagation(e);
+    this.clear();
+    this.setState(selectId(id));
+    console.log(this.state.selectedId);
   };
 
   render() {
-  
     const Provider = Ctx.Provider;
     return (
       <Provider

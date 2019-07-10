@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { MainStage as StyledMainStage } from '../../styles/MainStage';
 import { Chart} from '../../styles/Chart';
 import QueryState from '../../data/QueryState';
